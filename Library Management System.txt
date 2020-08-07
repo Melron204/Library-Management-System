@@ -1,0 +1,87 @@
+Table name : Book_master
+att : PK book_code
+         book_title
+	 book_author
+ 	 book_availability		
+table name : member_master
+att : 		pk member_code
+		   member_name
+	           member_Type
+ 		   no_of_books_issued
+
+table name: book_return_issue
+att: 		pk issueSerialNumber
+	           member_code FK member_master
+		   book_code FK  book_table	
+		   data_of_issue  sysdate
+ 		   dueDate_return date
+------------------------------------------------------------------------
+SQL 
+---------------------------------------------------------------------		   
+ table book_master ::
+create table book_master(
+   book_code varchar(10) primary key,
+   book_title varchar(30),
+   book_author varchar(30),
+   book_availibility varchar(5),
+   Constraint book_code Check (book_code like'B%'),
+ Constraint book_availibility_constraint CHECK (book_availibility IN('yes','no')));
+
+INSERT ::insert into book_master values ('B100','C Learning','VIVEK GOHIL','yes');
+	 insert into book_master values ('B101','java Learning','Rajesh Koothrapali','yes');
+	 insert into book_master values ('B102','c++ Learning','Sheldon cooper','yes');
+	 insert into book_master values ('B103','python Learning','Lucifer Morningstar','yes');
+	 insert into book_master values ('B104','sql Learning','Harvey','yes');
+	 insert into book_master values ('B105','JSP Learning','Mike Ross','yes');
+	 insert into book_master values ('B106','STRUTS Learning','Racheal','yes');
+	 insert into book_master values ('B107','Hibernate Learning','Ankita','yes');
+	 insert into book_master values ('B108','PEARL Learning','Vincy','no');
+	 insert into book_master values ('B109','HTML Learning','Supriya','no');
+
+-------------------------------------------------------------------------------------
+Table  member_master ::
+create table member_master(
+   member_code varchar(10) primary key,
+   member_name varchar(30),
+   member_type varchar(10),
+   no_of_books_issued number(3),
+   Constraint member_code Check (member_code like 'M%'),
+   Constraint member_type_constraint CHECK (member_type IN('student','faculty')));
+
+INSERT :: 	insert into member_master values ('M100','Ram','student',2);
+		insert into member_master values ('M101','Shayam','student',2);
+		insert into member_master values ('M102','Sita','student',2);
+		insert into member_master values ('M103','Avril','student',2);
+		insert into member_master values ('M104','Disha','student',2);
+		insert into member_master values ('M105','Kinshuk','student',2);
+		insert into member_master values ('M106','Linton','student',2);
+		insert into member_master values ('M107','Sonali','student',2);
+		insert into member_master values ('M108','Ramesh','student',2);
+		insert into member_master values ('M109','Suresh','student',2);
+
+Table  book_return_issue ::
+create table book_return_issue(
+   issueSerialNumber number(10),
+   member_code varchar(10),
+   book_code   varchar(10),
+   date_of_issue date default sysdate not null,
+   dueDate_return date,
+   primary key(issueSerialNumber),
+CONSTRAINT member_code_fk FOREIGN KEY (member_code) REFERENCES member_master(member_code),
+CONSTRAINT book_code_fk FOREIGN KEY (book_code) REFERENCES book_master(book_code));
+
+INSERT ::	insert into book_return_issue(issueSerialNumber,dueDate_return,book_code,member_code) values (0,SYSDATE+10,'B102','M104');
+		insert into book_return_issue(issueSerialNumber,dueDate_return,book_code,member_code) values (1,SYSDATE+10,'B101','M105');
+		insert into book_return_issue(issueSerialNumber,dueDate_return,book_code,member_code) values (2,SYSDATE+10,'B103','M102');
+		insert into book_return_issue(issueSerialNumber,dueDate_return,book_code,member_code) values (3,SYSDATE+10,'B105','M108');	
+		insert into book_return_issue(issueSerialNumber,dueDate_return,book_code,member_code) values (4,SYSDATE+10,'B104','M100');	
+		insert into book_return_issue(issueSerialNumber,dueDate_return,book_code,member_code) values (5,SYSDATE+10,'B106','M101');
+		insert into book_return_issue(issueSerialNumber,dueDate_return,book_code,member_code) values (6,SYSDATE+10,'B107','M103');
+		insert into book_return_issue(issueSerialNumber,dueDate_return,book_code,member_code) values (7,SYSDATE+10,'B108','M106');	
+		insert into book_return_issue(issueSerialNumber,dueDate_return,book_code,member_code) values (8,SYSDATE+10,'B100','M107');	
+		insert into book_return_issue(issueSerialNumber,dueDate_return,book_code,member_code) values (9,SYSDATE+10,'B100','M109');
+ 		
+
+
+
+  
